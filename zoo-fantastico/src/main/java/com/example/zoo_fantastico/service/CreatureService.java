@@ -9,7 +9,7 @@ import com.example.zoo_fantastico.entity.Creature;
 import com.example.zoo_fantastico.repository.CreatureRepository;
 
 @Service
-public class CreatureService {
+public class CreatureService{
     private final CreatureRepository creatureRepository;
 
     @Autowired
@@ -22,6 +22,29 @@ public class CreatureService {
     }
     public List<Creature> getAllCreatures() {
         return creatureRepository.findAll();
+    }
+
+    public Creature getCreatureById(Long id) throws Exception{
+        return creatureRepository.findById(id).orElseThrow(() -> new Exception("Creature not found"));
+    }
+
+    public Creature updateCreature(Long id, Creature updatedCreature){
+        Creature creature = this.creatureRepository.findById(id).orElse(null);
+        creature.setName(updatedCreature.getName());
+        creature.setSpecies(updatedCreature.getSpecies());
+        creature.setSize(updatedCreature.getSize());
+        creature.setDangerLevel(updatedCreature.getDangerLevel());
+        creature.setHealthStatus(updatedCreature.getHealthStatus());
+        return creatureRepository.save(creature);
+    }
+
+    public void deleteCreature(Long id) {
+        Creature creature = this.creatureRepository.findById(id).orElse(null);
+        if (!"critical".equals(creature.getHealthStatus())) {
+            creatureRepository.delete(creature);
+        } else {
+            throw new IllegalStateException("Cannot delete a creature in critical health");
+        }
     }
 
 }
