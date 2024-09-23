@@ -1,9 +1,6 @@
 package com.example.zoo_fantastico.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,8 +20,8 @@ public class Creature {
     private int dangerLevel;
     private String healthStatus;
 
-    // @ManyToOne
-    // @JoinColumn(name = "zone_id")
-    // private Zone zone;
+    @ManyToOne
+    @JoinColumn(name ="zone_id")
+    private Zonas zona;
 
 }
