@@ -24,6 +24,7 @@ public class CreatureController {
 
     @Autowired
     public CreatureController(CreatureService creatureService) {
+
         this.creatureService = creatureService;
     }
 
